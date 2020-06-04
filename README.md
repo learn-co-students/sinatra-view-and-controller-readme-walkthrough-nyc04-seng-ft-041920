@@ -13,7 +13,7 @@ In this code-along, we'll show you how to pass data back to views from your cont
 
 ## Setup
 
-Why is passing data back to views from your controller so important? It allows us to make your pages *dynamic* rather than *static* - that is, the data can change depending on the inputs provided by the user. As an example, we'll be creating a "String Reverser" - the user inputs a string ("Hello World") into an HTML form, and is shown the reverse of the string ("dlroW olleH") on the following page.
+Why is passing data back to views from your controller so important? It allows us to make your pages _dynamic_ rather than _static_ - that is, the data can change depending on the inputs provided by the user. As an example, we'll be creating a "String Reverser" - the user inputs a string ("Hello World") into an HTML form, and is shown the reverse of the string ("dlroW olleH") on the following page.
 
 To code along, fork and clone this repository. Run `bundle install` from the command line to ensure you have the proper dependencies installed. The starter code contains a basic Sinatra application which you can access by running `shotgun` in your command line and then opening `http://localhost:9393/reverse` in your browser.
 
@@ -22,17 +22,15 @@ To code along, fork and clone this repository. Run `bundle install` from the com
 Let's take a closer look at the starter code.
 
 #### Views
-+ `reverse.erb` has a form that has one text input tag: `<input type="text" name="string"> `. Remember that the name attribute becomes the key for the form data in the `params` hash. The form has a method attribute of `POST`, and an action attribute of `/reverse`.
-+ `reversed.erb` which will eventually show the reversed version of the string submitted by the user.
-+ `friends.erb`, which we'll be using to talk about iteration in erb.
-+ **Note:** The views all have basic CSS styling (linked using the `<link`> tag) that can be found in `style.css` in the `public/stylesheets` folder.
+
+- `reverse.erb` has a form that has one text input tag: `<input type="text" name="string">`. Remember that the name attribute becomes the key for the form data in the `params` hash. The form has a method attribute of `POST`, and an action attribute of `/reverse`.
+- `reversed.erb` which will eventually show the reversed version of the string submitted by the user.
+- `friends.erb`, which we'll be using to talk about iteration in erb.
+- **Note:** The views all have basic CSS styling (linked using the `<link`> tag) that can be found in `style.css` in the `public/stylesheets` folder.
 
 #### Routes
-+ The controller has three routes:
-	+  `get '/reverse' do`, which renders the `reverse.erb` page.
-	+  `post '/reverse' do`, which receives that 	params hash from the form (but does nothing with it) and renders the `reversed.erb` page.
-	+  `get '/friends' do`, which renders the `friends.erb` page.
 
+- The controller has three routes: + `get '/reverse' do`, which renders the `reverse.erb` page. + `post '/reverse' do`, which receives that params hash from the form (but does nothing with it) and renders the `reversed.erb` page. + `get '/friends' do`, which renders the `friends.erb` page.
 
 ## Manipulating Params in the Controller
 
@@ -45,12 +43,13 @@ post '/reverse' do
   erb :reversed
 end
 ```
- When we submit the form, the contents of params will output **in the console**. Let's submit "hello friend" to the form and look at `params` in our console:
+
+When we submit the form, the contents of params will output **in the console**. Let's submit "hello friend" to the form and look at `params` in our console:
 
 ![Puts Params](https://s3.amazonaws.com/learn-verified/puts-params.png)
 
-
 To manipulate the string, let's take it out of the params hash, and then call the `.reverse` method on it:
+
 ```ruby
 post '/reverse' do
   original_string = params["string"]
@@ -59,6 +58,7 @@ post '/reverse' do
   erb :reversed
 end
 ```
+
 We now have a reversed version of the original string submitted by the user. Great! But it's in our controller, which our user will never see. How do we pass this data back in to a view?
 
 ## Using Instance Variables
@@ -73,6 +73,7 @@ post '/reverse' do
   erb :reversed
 end
 ```
+
 We can now access the contents of `@reversed_string` inside of our view, `reversed.erb`.
 
 **Note:** Instance variables are ONLY passed from the controller method where they are created to the view that is rendered, not between controller methods. For example:
@@ -93,8 +94,8 @@ end
 
 Right now the content of `reversed.erb` is just plain old vanilla HTML in a .erb file. In order to show the content of a Ruby string, we need to use erb tags. As a recap:
 
-+ `<%= contents %>` will display the evaluated expression within the opening and closing.
-+ `<% contents %>` will evaluate the contents of the expression, but will not display them.
+- `<%= contents %>` will display the evaluated expression within the opening and closing.
+- `<% contents %>` will evaluate the contents of the expression, but will not display them.
 
 We know that the contents of `@reversed_string` are available to the erb file, so let's put them together:
 
@@ -115,6 +116,7 @@ We know that the contents of `@reversed_string` are available to the erb file, s
   </body>
 </html>
 ```
+
 Notice that we've put the erb tag with `@reversed_string` within `<h2>` tags. Just some additional styling!
 
 ## Iterating in ERB
@@ -128,6 +130,7 @@ get '/friends' do
   erb :friends
 end
 ```
+
 In friends.erb, we want to show each item in the array inside of its own `<h2>` tag. Unfortunately this won't work:
 
 ```erb
@@ -161,6 +164,7 @@ This will set up a loop through all items in `@friends` and then place each item
 <h2>Malala Yousafzai</h2>
 <h2>Sojourner Truth</h2>
 ```
+
 You can imagine how powerful iteration in erb is when you have an array of thousands of items that you have to display in your view!
 
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/sinatra-view-and-controller-readme-walkthrough' title='Passing Data Between Views And Controllers in Sinatra'>Passing Data Between Views And Controllers in Sinatra</a> on Learn.co and start learning to code for free.</p>
